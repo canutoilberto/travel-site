@@ -8,43 +8,43 @@ const destinations = [
     name: "Paris",
     country: "França",
     image:
-      "https://images.unsplash.com/photo-1502602898657-3e91760cbb34?q=80&w=1746&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+      "https://images.pexels.com/photos/2344/cars-france-landmark-lights.jpg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
   },
   {
     name: "Bali",
     country: "Indonésia",
     image:
-      "https://images.unsplash.com/photo-1500213721845-709b85a28da0?q=80&w=1740&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+      "https://images.pexels.com/photos/2166559/pexels-photo-2166559.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
   },
   {
     name: "Tóquio",
     country: "Japão",
     image:
-      "https://images.unsplash.com/photo-1717012196028-1c2f16dbaf23?q=80&w=1888&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+      "https://images.pexels.com/photos/950834/pexels-photo-950834.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
   },
   {
     name: "Nova York",
     country: "EUA",
     image:
-      "https://images.unsplash.com/photo-1518391846015-55a9cc003b25?q=80&w=1740&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+      "https://images.pexels.com/photos/290386/pexels-photo-290386.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
   },
   {
     name: "Rio de Janeiro",
     country: "Brasil",
     image:
-      "https://images.unsplash.com/photo-1516306580123-e6e52b1b7b5f?q=80&w=1826&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+      "https://images.pexels.com/photos/161212/rio-de-janeiro-olympics-2016-niteroi-brazil-161212.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
   },
   {
     name: "Santorini",
     country: "Grécia",
     image:
-      "https://images.unsplash.com/photo-1673590362725-2323fe837d43?q=80&w=1887&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+      "https://images.pexels.com/photos/161815/santorini-oia-greece-water-161815.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
   },
   {
     name: "Machu Picchu",
     country: "Peru",
     image:
-      "https://plus.unsplash.com/premium_photo-1694542947671-03a7d921cc85?q=80&w=1887&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+      "https://images.pexels.com/photos/2929906/pexels-photo-2929906.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
   },
 ];
 
@@ -62,7 +62,7 @@ export default function BentoGallery() {
               className={`overflow-hidden ${
                 index === 0
                   ? "md:col-span-2 md:row-span-2"
-                  : index === 2
+                  : index === 1
                   ? "md:row-span-2"
                   : index === 4
                   ? "md:col-span-2"
@@ -70,14 +70,14 @@ export default function BentoGallery() {
               }`}
             >
               <CardContent className="p-0 relative group">
-                <Image
-                  src={dest.image}
-                  alt={`${dest.name}, ${dest.country}`}
-                  width={800}
-                  height={600}
-                  layout="responsive"
-                  className="object-cover transition-transform duration-300 group-hover:scale-110"
-                />
+                <div className="relative w-full h-64 md:h-80">
+                  <Image
+                    src={dest.image}
+                    alt={`${dest.name}, ${dest.country}`}
+                    fill
+                    objectFit="cover"
+                  />
+                </div>
                 <div className="absolute inset-0 bg-black bg-opacity-40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-4">
                   <h3 className="text-white text-xl font-bold">{dest.name}</h3>
                   <p className="text-white flex items-center">

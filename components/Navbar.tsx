@@ -2,8 +2,10 @@
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
-import { Input } from "../components/ui/input";
-import { Button } from "../components/ui/button";
+import { useTheme } from "next-themes";
+import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
+import { Switch } from "@/components/ui/switch";
 import {
   NavigationMenu,
   NavigationMenuContent,
@@ -11,53 +13,41 @@ import {
   NavigationMenuLink,
   NavigationMenuList,
   NavigationMenuTrigger,
-} from "../components/ui/navigation-menu";
-import { Sheet, SheetContent, SheetTrigger } from "../components/ui/sheet";
-import { Plane, Search, Menu } from "lucide-react";
-import { ThemeToggle } from "./ThemeToggle";
+} from "@/components/ui/navigation-menu";
+import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
+import { Plane, Search, Menu, Moon, Sun } from "lucide-react";
 
 export default function Navbar() {
-  const [isScrolled, setIsScrolled] = useState(false);
+  const [mounted, setMounted] = useState(false);
+  const { theme, setTheme } = useTheme();
 
   useEffect(() => {
-    const handleScroll = () => {
-      if (window.scrollY > 0) {
-        setIsScrolled(true);
-      } else {
-        setIsScrolled(false);
-      }
-    };
-
-    window.addEventListener("scroll", handleScroll);
-
-    return () => {
-      window.removeEventListener("scroll", handleScroll);
-    };
+    setMounted(true);
   }, []);
 
+  if (!mounted) {
+    return null;
+  }
+
   return (
-    <nav
-      className={`fixed top-0 w-full z-50 transition-all duration-300 ${
-        isScrolled ? "bg-white shadow-md" : "bg-transparent"
-      }`}
-    >
+    <nav className="w-full bg-background z-50 border-b">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between h-16 gap-4">
+        <div className="flex items-center justify-between h-16">
           {/* Logo */}
           <Link href="/" className="flex items-center">
-            <Plane className="h-8 w-8 text-primary" />
-            <span className="ml-2 text-xl font-bold text-primary">
+            <Plane className="h-6 w-6 sm:h-8 sm:w-8 text-primary dark:text-primary-foreground" />
+            <span className="ml-2 text-lg sm:text-xl font-bold text-primary dark:text-primary-foreground">
               TravelSite
             </span>
           </Link>
 
           {/* Navigation Menu - Desktop */}
           <NavigationMenu className="hidden md:flex">
-            <NavigationMenuList className="flex gap-6">
+            <NavigationMenuList>
               <NavigationMenuItem>
                 <NavigationMenuTrigger>Destinos</NavigationMenuTrigger>
                 <NavigationMenuContent>
-                  <ul className="grid gap-3 p-4 md:w-[400px] lg:w-[500px] lg:grid-cols-[.75fr_1fr]">
+                  <ul className="grid w-[400px] gap-3 p-4 md:w-[500px] md:grid-cols-2 lg:w-[600px]">
                     <li className="row-span-3">
                       <NavigationMenuLink asChild>
                         <a
@@ -76,17 +66,49 @@ export default function Navbar() {
                     </li>
                     <li>
                       <NavigationMenuLink asChild>
-                        <a href="/praias">Praias</a>
+                        <a
+                          href="/praias"
+                          className="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground"
+                        >
+                          <div className="text-sm font-medium leading-none">
+                            Praias
+                          </div>
+                          <p className="line-clamp-2 text-sm leading-snug text-muted-foreground">
+                            Relaxe em praias paradisíacas ao redor do mundo.
+                          </p>
+                        </a>
                       </NavigationMenuLink>
                     </li>
                     <li>
                       <NavigationMenuLink asChild>
-                        <a href="/montanhas">Montanhas</a>
+                        <a
+                          href="/montanhas"
+                          className="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground"
+                        >
+                          <div className="text-sm font-medium leading-none">
+                            Montanhas
+                          </div>
+                          <p className="line-clamp-2 text-sm leading-snug text-muted-foreground">
+                            Explore paisagens deslumbrantes e trilhas
+                            emocionantes.
+                          </p>
+                        </a>
                       </NavigationMenuLink>
                     </li>
                     <li>
                       <NavigationMenuLink asChild>
-                        <a href="/cidades">Cidades</a>
+                        <a
+                          href="/cidades"
+                          className="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground"
+                        >
+                          <div className="text-sm font-medium leading-none">
+                            Cidades
+                          </div>
+                          <p className="line-clamp-2 text-sm leading-snug text-muted-foreground">
+                            Descubra a cultura e a vida noturna de cidades
+                            fascinantes.
+                          </p>
+                        </a>
                       </NavigationMenuLink>
                     </li>
                   </ul>
@@ -105,17 +127,26 @@ export default function Navbar() {
             </NavigationMenuList>
           </NavigationMenu>
 
-          {/* Search Bar */}
-          <div className="hidden md:flex items-center gap-4">
+          {/* Search Bar and Theme Switch */}
+          <div className="hidden md:flex items-center space-x-4">
             <Input
               type="search"
               placeholder="Pesquisar destinos..."
-              className="mr-2"
+              className="w-64"
             />
             <Button type="submit" size="icon">
               <Search className="h-4 w-4" />
             </Button>
-            <ThemeToggle />
+            <div className="flex items-center space-x-2">
+              <Sun className="h-[1.2rem] w-[1.2rem] rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" />
+              <Switch
+                checked={theme === "dark"}
+                onCheckedChange={() =>
+                  setTheme(theme === "dark" ? "light" : "dark")
+                }
+              />
+              <Moon className="h-[1.2rem] w-[1.2rem] rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" />
+            </div>
           </div>
 
           {/* Mobile Menu */}
@@ -125,8 +156,14 @@ export default function Navbar() {
                 <Menu className="h-6 w-6" />
               </Button>
             </SheetTrigger>
-            <SheetContent side="right">
+            <SheetContent side="right" className="w-[300px] sm:w-[400px]">
               <nav className="flex flex-col space-y-4">
+                <Link href="/" className="flex items-center">
+                  <Plane className="h-6 w-6 text-primary dark:text-primary-foreground" />
+                  <span className="ml-2 text-lg font-bold text-primary dark:text-primary-foreground">
+                    TravelSite
+                  </span>
+                </Link>
                 <Link href="/destinos" className="text-lg font-medium">
                   Destinos
                 </Link>
@@ -146,6 +183,19 @@ export default function Navbar() {
                     <Search className="h-4 w-4 mr-2" />
                     Pesquisar
                   </Button>
+                </div>
+                <div className="flex items-center justify-between pt-4">
+                  <span className="text-sm font-medium">Alternar Tema</span>
+                  <div className="flex items-center space-x-2">
+                    <Sun className="h-[1.2rem] w-[1.2rem] rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" />
+                    <Switch
+                      checked={theme === "dark"}
+                      onCheckedChange={() =>
+                        setTheme(theme === "dark" ? "light" : "dark")
+                      }
+                    />
+                    <Moon className="h-[1.2rem] w-[1.2rem] rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" />
+                  </div>
                 </div>
               </nav>
             </SheetContent>

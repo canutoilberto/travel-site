@@ -1,7 +1,6 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import {
   Carousel,
@@ -12,7 +11,6 @@ import {
 } from "@/components/ui/carousel";
 
 type SlideContent = {
-  type: "image" | "video";
   src: string;
   alt?: string;
   cta: string;
@@ -21,22 +19,20 @@ type SlideContent = {
 
 const slides: SlideContent[] = [
   {
-    type: "video",
-    src: "/placeholder.svg?height=600&width=1200",
+    src: "https://videos.pexels.com/video-files/2099568/2099568-hd_1920_1080_30fps.mp4",
     alt: "Praia paradisíaca",
     cta: "Descubra praias incríveis",
     description: "Relaxe em areias douradas e águas cristalinas",
   },
   {
-    type: "video",
-    src: "https://example.com/video-placeholder.mp4",
+    src: "https://videos.pexels.com/video-files/3015511/3015511-hd_1920_1080_24fps.mp4",
+    alt: "Caminhos de cultura",
     cta: "Explore cidades vibrantes",
     description:
       "Mergulhe na cultura e história de destinos urbanos fascinantes",
   },
   {
-    type: "video",
-    src: "/placeholder.svg?height=600&width=1200",
+    src: "https://videos.pexels.com/video-files/2547258/2547258-uhd_2560_1440_30fps.mp4",
     alt: "Montanhas majestosas",
     cta: "Aventure-se nas alturas",
     description:
@@ -56,37 +52,27 @@ export default function Header() {
   }, []);
 
   return (
-    <header className="relative h-[600px] overflow-hidden">
+    <header className="relative h-[200px] md:h-[670px] overflow-hidden">
       <Carousel className="w-full h-full">
         <CarouselContent>
           {slides.map((slide, index) => (
             <CarouselItem key={index} className="relative w-full h-full">
-              {slide.type === "image" ? (
-                <Image
-                  src={slide.src}
-                  alt={slide.alt || ""}
-                  layout="fill"
-                  objectFit="cover"
-                  priority={index === 0}
-                />
-              ) : (
-                <video
-                  src={slide.src}
-                  autoPlay
-                  loop
-                  muted
-                  playsInline
-                  className="w-full h-full object-cover"
-                />
-              )}
-              <div className="absolute inset-0 bg-black bg-opacity-40 flex flex-col items-center justify-center text-white p-8">
-                <h1 className="text-4xl md:text-6xl font-bold mb-4 text-center">
+              <video
+                src={slide.src}
+                autoPlay
+                loop
+                muted
+                playsInline
+                className="w-full h-full object-cover"
+              />
+              <div className="absolute inset-0 bg-black bg-opacity-50 flex flex-col justify-center items-center text-white p-4 sm:p-8 text-center">
+                <h1 className="text-2xl sm:text-4xl md:text-6xl font-bold mb-2 sm:mb-4">
                   {slide.cta}
                 </h1>
-                <p className="text-xl md:text-2xl mb-8 text-center max-w-2xl">
+                <p className="text-sm sm:text-xl md:text-2xl mb-4 sm:mb-8 max-w-lg md:max-w-2xl">
                   {slide.description}
                 </p>
-                <Button size="lg" className="text-lg">
+                <Button size="lg" className="text-sm sm:text-lg">
                   Saiba Mais
                 </Button>
               </div>
@@ -96,11 +82,11 @@ export default function Header() {
         <CarouselPrevious className="left-4" />
         <CarouselNext className="right-4" />
       </Carousel>
-      <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 flex space-x-2">
+      <div className="absolute bottom-2 sm:bottom-4 left-1/2 transform -translate-x-1/2 flex space-x-2">
         {slides.map((_, index) => (
           <button
             key={index}
-            className={`w-3 h-3 rounded-full ${
+            className={`w-2 h-2 sm:w-3 sm:h-3 rounded-full ${
               currentSlide === index ? "bg-white" : "bg-white/50"
             }`}
             onClick={() => setCurrentSlide(index)}
