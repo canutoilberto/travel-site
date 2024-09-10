@@ -42,7 +42,7 @@ export default function Navbar() {
       }`}
     >
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between h-16">
+        <div className="flex items-center justify-between h-16 gap-4">
           {/* Logo */}
           <Link href="/" className="flex items-center">
             <Plane className="h-8 w-8 text-primary" />
@@ -53,7 +53,7 @@ export default function Navbar() {
 
           {/* Navigation Menu - Desktop */}
           <NavigationMenu className="hidden md:flex">
-            <NavigationMenuList>
+            <NavigationMenuList className="flex gap-6">
               <NavigationMenuItem>
                 <NavigationMenuTrigger>Destinos</NavigationMenuTrigger>
                 <NavigationMenuContent>
@@ -106,7 +106,7 @@ export default function Navbar() {
           </NavigationMenu>
 
           {/* Search Bar */}
-          <div className="hidden md:flex items-center gap-3">
+          <div className="hidden md:flex items-center gap-4">
             <Input
               type="search"
               placeholder="Pesquisar destinos..."
