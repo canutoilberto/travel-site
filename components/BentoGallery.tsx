@@ -50,43 +50,49 @@ const destinations = [
 
 export default function BentoGallery() {
   return (
-    <section className="py-16 px-4 md:px-6 lg:px-8 bg-background">
+    <section className="py-12 sm:py-16 px-4 sm:px-6 lg:px-8 bg-background">
       <div className="max-w-7xl mx-auto">
-        <h2 className="text-3xl md:text-4xl font-bold mb-8 text-center">
+        <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-6 sm:mb-8 text-center">
           Destinos Populares
         </h2>
-        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
           {destinations.map((dest, index) => (
             <Card
               key={dest.name}
               className={`overflow-hidden ${
                 index === 0
-                  ? "md:col-span-2 md:row-span-2"
-                  : index === 1
-                  ? "md:row-span-2"
+                  ? "sm:col-span-2 sm:row-span-2"
+                  : index === 2
+                  ? "lg:row-span-2"
                   : index === 4
-                  ? "md:col-span-2"
+                  ? "sm:col-span-2"
                   : ""
               }`}
             >
               <CardContent className="p-0 relative group">
-                <div className="relative w-full h-64 md:h-80">
+                <div className="aspect-[4/3] sm:aspect-square w-full h-full relative">
                   <Image
                     src={dest.image}
                     alt={`${dest.name}, ${dest.country}`}
-                    fill
+                    layout="fill"
                     objectFit="cover"
+                    className="transition-transform duration-300 group-hover:scale-110"
                   />
-                </div>
-                <div className="absolute inset-0 bg-black bg-opacity-40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-4">
-                  <h3 className="text-white text-xl font-bold">{dest.name}</h3>
-                  <p className="text-white flex items-center">
-                    <MapPin className="w-4 h-4 mr-1" />
-                    {dest.country}
-                  </p>
-                  <Button variant="secondary" className="mt-2">
-                    Explorar
-                  </Button>
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-4">
+                    <h3 className="text-white text-lg sm:text-xl font-bold">
+                      {dest.name}
+                    </h3>
+                    <p className="text-white flex items-center text-sm sm:text-base">
+                      <MapPin className="w-4 h-4 mr-1" />
+                      {dest.country}
+                    </p>
+                    <Button
+                      variant="secondary"
+                      className="mt-2 text-sm sm:text-base"
+                    >
+                      Explorar
+                    </Button>
+                  </div>
                 </div>
               </CardContent>
             </Card>
